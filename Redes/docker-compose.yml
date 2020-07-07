@@ -1,0 +1,28 @@
+version: "3"
+services:
+        mysql:
+            container_name: mysql
+            image: mariadb
+            ports:
+                - "3260:3260"
+            volumes: 
+                - mysql_data:/var/lib/mysql
+            environment: 
+                MYSQL_ROOT_PASSWORD: admin
+        
+        wordpress:
+            container_name: wordpress
+            image: wordpress
+            ports:
+                - "2000:80"
+            volumes: 
+                - mywebsite_data:/var/www/html
+            environment: 
+                WORDPRESS_DB_PASSWORD: admin
+            depends_on:
+                - mysql
+            links:
+                - mysql
+volumes: 
+    mysql_data:
+    mywebsite_data:
